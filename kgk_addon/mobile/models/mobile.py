@@ -9,8 +9,7 @@ class lead(models.Model):
 
     @api.model
     def pipeline_count(self):
-        #self.env.cr.execute('SELECT stage_id, count(stage_id) from crm_lead where active=true group by stage_id')
-        #return self.env.cr.fetchall()
+        # return the count of leads per stage
         result = dict();
         crmstage = self.pool['crm.stage']
         stages = self.env['crm.stage'].search([])
@@ -21,3 +20,32 @@ class lead(models.Model):
             result[id] = count;
 
         return result
+
+
+    @api.multi
+    def create(self, vals):
+
+        if 'partner_id' in vals:
+            partner = self.env['res.partner'].browse(vals['partner_id'])
+            print(partner.name)
+            vals['partner_name'] = partner.name
+        return super(lead, self).create(vals)
+
+
+
+    @api.multi
+    def write(self, vals):
+
+        if 'partner_id' in vals:
+            partner = self.env['res.partner'].browse(vals['partner_id'])
+            print(partner.name)
+            vals['partner_name'] = partner.name
+        return super(lead, self).write(vals)
+
+
+
+
+
+
+    #self.env.cr.execute('SELECT stage_id, count(stage_id) from crm_lead where active=true group by stage_id')
+        #return self.env.cr.fetchall()
