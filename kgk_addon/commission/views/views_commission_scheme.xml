@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <odoo>
     
-  <record id="view_form_commission_scheme" model="ir.ui.view">
+  <record id="commission_scheme_form_view" model="ir.ui.view">
     <field name="name">commission.scheme.form</field>
     <field name="model">commission.scheme</field>
     <field name="arch" type="xml">
@@ -10,6 +10,64 @@
           <field name="name"/>
           <field name="active"/>
           <field name="product" />
+          <field name="tier_ids" />
+        </group>
+      </form>
+    </field>
+  </record>
+
+  <record id="commission_scheme_list_view" model="ir.ui.view">
+    <field name="name">commission.scheme.list</field>
+    <field name="model">commission.scheme</field>
+    <field name="arch" type="xml">
+      <tree>        
+        <field name="name"/>
+        <field name="active"/>
+        <field name="product" />
+      </tree>
+    </field>
+  </record>
+
+  <record id="commission_group_list_view" model="ir.ui.view">
+    <field name="name">commission.group.list</field>
+    <field name="model">commission.group</field>
+    <field name="arch" type="xml">
+      <tree>
+        <field name="name"/>
+        <field name="active"/>
+        <field name="scheme_ids" />
+      </tree>
+    </field>
+  </record>
+
+  <record id="commission_tier_list_view" model="ir.ui.view">
+    <field name="name">commission.tier.list</field>
+    <field name="model">commission.tier</field>
+    <field name="arch" type="xml">
+      <tree>
+        <field name="type"/>
+        <field name="tierStart" />
+        <field name="tierEnd" />
+        <field name="percent" />
+        <field name="amount" />
+      </tree>
+    </field>
+  </record>
+
+  <record id="commission_tier_form_view" model="ir.ui.view">
+    <field name="name">commission.tier.form</field>
+    <field name="model">commission.tier</field>
+    <field name="arch" type="xml">
+      <form string="Commsission tier">
+        <group>
+          <field name="type"/>
+          <field name="tierStart" />
+          <field name="tierEnd" />
+          <field name="percent" />
+          <field name="amount" />
+          <field name="activeFrom" />
+          <field name="activeEnd" />
+          <field name="trigger" />
         </group>
       </form>
     </field>
@@ -28,4 +86,15 @@
     </field>  
   </record>
   -->
+
+  <record id="commission_hierarchy_list_view" model="ir.ui.view">
+    <field name="name">commission_hierarchy.list</field>
+    <field name="model">commission.hierarchy</field>
+    <field name="priority">1</field>
+    <field name="arch" type="xml">
+      <tree string="Commission hierarchy">
+        <field name="name"/>
+      </tree>
+    </field>
+  </record>
 </odoo>

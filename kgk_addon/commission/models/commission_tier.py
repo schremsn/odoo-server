@@ -8,10 +8,9 @@ class commission_tier(models.Model):
 
     type = fields.Selection((('v','Value'), ('q','Quantity')), string='Calculation base', required = True)
     tierStart = fields.Integer(string='Start value', default=0)
-    tierEnd = fields.Integer(string = 'Start value')
+    tierEnd = fields.Integer(string = 'End value')
     amount = fields.Float(string = 'Commission amount')
     percent = fields.Float(string = 'Commission percent')
     trigger = fields.Selection((('s', 'Sales'), ('c', 'Commission')), string = 'Triggered by' )
     activeFrom = fields.Datetime(string = 'Start date')
     activeEnd = fields.Datetime(string = 'End date')
-    scheme = fields.Many2one('commission.scheme')
