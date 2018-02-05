@@ -1,0 +1,31 @@
+<?xml version="1.0"?>
+<odoo>
+    
+  <record id="view_form_commission_scheme" model="ir.ui.view">
+    <field name="name">commission.scheme.form</field>
+    <field name="model">commission.scheme</field>
+    <field name="arch" type="xml">
+      <form string="Commsission scheme">
+        <group>
+          <field name="name"/>
+          <field name="active"/>
+          <field name="product" />
+        </group>
+      </form>
+    </field>
+  </record>
+
+  <!--
+  <record id="view_tree_commission_scheme" model="'ir.ui.view">
+    <field name="name">Commission scheme tree</field>
+    <field name="model">commission.scheme</field>
+    <field name="arch" type="xml">
+      <tree>
+        <field name="name"/>
+        <field name="active"/>
+        <field name="product"/>
+      </tree>
+    </field>  
+  </record>
+  -->
+</odoo>

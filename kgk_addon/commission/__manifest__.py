@@ -1,15 +1,16 @@
 # -*- coding: utf-8 -*-
 {
-    'name': "KGK mobile",
+    'name': "KGK commission",
 
     'summary': """
-        Support for mobile app""",
+        Direct sales management and commissions
+        """,
 
     'description': """
-        Support for mobile app
+        Direct sales management and commissions
     """,
 
-    'author': "KGK.vn",
+    'author': "KGK",
     'website': "http://www.kgk.vn",
 
     # Categories can be used to filter modules in modules listing
@@ -19,19 +20,20 @@
     'version': '0.1',
 
     # any module necessary for this one to work correctly
-    'depends': ['base','crm'],
+    'depends': ['base', 'crm'],
 
     # always loaded
     'data': [
         # 'security/ir.model.access.csv',
         'views/views.xml',
         'views/templates.xml',
+        'views/views_commission_scheme.xml',
+        'views/menu_commission.xml',
     ],
     # only loaded in demonstration mode
     'demo': [
         'demo/demo.xml',
     ],
-
     'installable': True,
     'application': True,
     'auto_install': False,
