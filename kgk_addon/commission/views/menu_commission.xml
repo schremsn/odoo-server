@@ -24,8 +24,14 @@
      id="action_commission_hierarchy"
      name ="Commission hierarchy"
      res_model="commission.hierarchy"
-     view_id="commission_hierarchy_list_view"
-     view_mode="tree,form" />
+     view_id="commission_hierarchy_tree_view"
+     view_type="tree" />
+
+  <act_window
+   id="action_commission_summary"
+   name ="Commission summary"
+   res_model="commission.summary"
+   view_mode="tree,form" />
 
   <menuitem id="commission" name="Commission" />
   <menuitem
@@ -50,8 +56,14 @@
     id="commission_tier"
     name="Tier"
     parent="commission_header"
-    sequence="20" 
+    sequence="30" 
     action="action_commission_tier"/>
+  <menuitem
+   id="commission_summary"
+   name="Summary"
+   parent="commission_header"
+   sequence="40"
+   action="action_commission_summary"/>
   <menuitem
     id="commission_reports"
     name="Reports"

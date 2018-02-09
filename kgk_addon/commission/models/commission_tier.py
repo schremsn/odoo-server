@@ -12,5 +12,5 @@ class commission_tier(models.Model):
     amount = fields.Float(string = 'Commission amount')
     percent = fields.Float(string = 'Commission percent')
     trigger = fields.Selection((('s', 'Sales'), ('c', 'Commission')), string = 'Triggered by' )
-    activeFrom = fields.Datetime(string = 'Start date')
-    activeEnd = fields.Datetime(string = 'End date')
+    activeFrom = fields.Date(string = 'Start date')
+    activeEnd = fields.Date(string = 'End date')
