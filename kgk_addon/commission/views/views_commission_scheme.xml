@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 <odoo>
-    
+  
   <record id="commission_scheme_form_view" model="ir.ui.view">
     <field name="name">commission.scheme.form</field>
     <field name="model">commission.scheme</field>
@@ -90,7 +90,6 @@
   <record id="commission_hierarchy_list_view" model="ir.ui.view">
     <field name="name">commission_hierarchy.list</field>
     <field name="model">commission.hierarchy</field>
-    <field name="priority">18</field>
     <field name="arch" type="xml">
       <tree string="Commission hierarchy">
         <field name="name"/>
@@ -102,7 +101,6 @@
    <record id="commission_hierarchy_tree_view" model="ir.ui.view">
     <field name="name">commission_hierarchy.tree</field>
     <field name="model">commission.hierarchy</field>
-    <field name="priority">16</field>
     <field name="type">tree</field>
     <field name="field_parent">child_id</field>
     <field name="arch" type="xml">

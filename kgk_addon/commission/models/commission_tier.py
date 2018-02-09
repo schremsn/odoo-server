@@ -14,3 +14,4 @@ class commission_tier(models.Model):
     trigger = fields.Selection((('s', 'Sales'), ('c', 'Commission')), string = 'Triggered by' )
     activeFrom = fields.Date(string = 'Start date')
     activeEnd = fields.Date(string = 'End date')
+    scheme = fields.Many2one('commission.scheme', required=True, ondelete='cascade',)
