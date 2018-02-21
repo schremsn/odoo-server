@@ -5,7 +5,10 @@
     <field name="name">commission.scheme.form</field>
     <field name="model">commission.scheme</field>
     <field name="arch" type="xml">
-      <form string="Commsission scheme">
+      <form string="Commission scheme">
+        <header>
+          <button string="Calculate" type="object" name="calculate"/>
+        </header>
         <group>
           <field name="name"/>
           <field name="active"/>
@@ -46,8 +49,8 @@
     <field name="arch" type="xml">
       <tree>
         <field name="type"/>
-        <field name="tierStart" />
-        <field name="tierEnd" />
+        <field name="tier_start" />
+        <field name="tier_end" />
         <field name="percent" />
         <field name="amount" />
       </tree>
@@ -61,12 +64,12 @@
       <form string="Commsission tier">
         <group>
           <field name="type"/>
-          <field name="tierStart" />
-          <field name="tierEnd" />
+          <field name="tier_start" />
+          <field name="tier_end" />
           <field name="percent" />
           <field name="amount" />
-          <field name="activeFrom" />
-          <field name="activeEnd" />
+          <field name="active_from" />
+          <field name="active_end" />
           <field name="trigger" />
         </group>
       </form>

@@ -2,16 +2,25 @@
 
 from odoo import models, fields, api
 
-class commission_tier(models.Model):
+class CommissionTier(models.Model):
     _name = 'commission.tier'
     _description = 'Define commission tiers'
 
     type = fields.Selection((('v','Value'), ('q','Quantity')), string='Calculation base', required = True)
-    tierStart = fields.Integer(string='Start value', default=0)
-    tierEnd = fields.Integer(string = 'End value')
+    tier_start = fields.Integer(string='Start value', default=0)
+    tier_end = fields.Integer(string = 'End value')
     amount = fields.Float(string = 'Commission amount')
     percent = fields.Float(string = 'Commission percent')
     trigger = fields.Selection((('s', 'Sales'), ('c', 'Commission')), string = 'Triggered by' )
-    activeFrom = fields.Date(string = 'Start date')
-    activeEnd = fields.Date(string = 'End date')
-    scheme = fields.Many2one('commission.scheme', required=True, ondelete='cascade',)
+    active_from = fields.Date(string = 'Start date')
+    active_end = fields.Date(string = 'End date')
+    scheme = fields.Many2one('commission.scheme', required=True, ondelete='cascade')
+
+
+    @api.onchange('tierStart')
+    def check_overlap(self):
+        scheme_id = self.scheme
+        start = self.tierStart
+
+        print(start)
+        print(scheme)

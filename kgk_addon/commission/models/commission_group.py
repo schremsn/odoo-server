@@ -2,7 +2,7 @@
 
 from odoo import models, fields, api
 
-class commission_group(models.Model):
+class CommissionGroup(models.Model):
     _name = 'commission.group'
     _description = 'Define commission tiers'
 
