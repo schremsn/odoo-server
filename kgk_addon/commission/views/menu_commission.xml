@@ -21,17 +21,19 @@
    view_mode="tree,form" />
   
    <act_window
-     id="action_commission_hierarchy"
-     name ="Commission hierarchy"
-     res_model="commission.hierarchy"
-     view_id="commission_hierarchy_list_view"
-     view_mode="tree, form" />
+    id="action_commission_tree"
+    name ="Commission hierarchy"
+    res_model="commission.hierarchy"
+    view_id="commission_hierarchy_list_view"
+    view_mode="tree,form" />
 
   <act_window
-   id="action_commission_summary"
-   name ="Commission summary"
-   res_model="commission.summary"
-   view_mode="tree,form" />
+    id="action_commission_summary"
+    name ="Commission summary"
+    res_model="commission.summary"
+    view_id="commission_summary_list_view"
+    view_mode="tree,form" />
+
 
   <menuitem id="commission" name="Commission" />
   <menuitem
@@ -98,8 +100,8 @@
     action="action_commission_scheme" />
 <menuitem
     id="sales_hierarchy"
-    name="Sales hierarchy"
+    name="Commission hierarchy"
     parent="commission_config"
     sequence="20"
-    action="action_commission_hierarchy" />
+    action="action_commission_tree" />
 </odoo>
