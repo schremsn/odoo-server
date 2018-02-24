@@ -54,6 +54,11 @@ class Commission(models.Model):
 
         print('user: %s' % (user_id))
 
+        #last_summary = self.env['commission.summary'].search([('salesagent', '=', user_id)])
+        self.env.cr.execute('select "end_date" from "commission_summary" order by "end_date" desc limit 1')
+        start_time = self.env.cr.fetchone()
+        print(start_time)
+
         # find schemes for the user
         groups = self.env['commission.group'].search([('active', '=', True), ('salesperson_ids', '=', user_id)])
         for group in groups:
@@ -69,7 +74,7 @@ class Commission(models.Model):
                 arr_tiers.append(id.id)
 
         # find order lines with product applicable for commssion
-        lines = self.env['sale.order.line'].search([('salesman_id', '=', user_id), ('product_id', 'in', arr_product_ids)])
+        lines = self.env['sale.order.line'].search([('salesman_id', '=', user_id), ('product_id', 'in', arr_product_ids), ('write_date', '>', start_time)])
         for line in lines:
             prod_id = line.product_id.id
             if prod_id in dict_lines.keys():
@@ -144,7 +149,6 @@ class Commission(models.Model):
             dict_summary.update({'amount' : amount})
             dict_summary.update({'detail' : arr_details})
             
-            print(dict_summary)
             self.env['commission.summary'].create(dict_summary)
             
             print('amount: %d for product %d ' % (amount, key))

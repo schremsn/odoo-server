@@ -64,3 +64,53 @@ class commission_hierarchy(models.Model):
         else:
             nodes = self.search(args, limit=limit)
         return nodes.name_get()
+
+
+
+    @api.model
+    def child_nodes_deep(self, node_id):
+        # return all child nodes below this node
+        if not node_id:
+            node_id = 1
+
+        result = []
+
+        node = self.browse([node_id])
+        if not node:
+            return None
+
+        children = node.child_id
+        if not children:
+            return None
+        result = self.children(node)
+        return result
+
+    @api.model
+    def parent_node(self, node_id):
+        # return the parent node 
+        if not node_id:
+            node_id = 1
+        
+        node = self.browse([node_id])
+        if not node:
+            return None
+        return node.parent_id
+
+
+    @api.model
+    def sales_agents(self, node_id):
+        # return all sales agents below this node
+        if not node_id:
+            node_id = 1
+
+    @api.model
+    def children(self, node):
+        result = []
+
+        tmp_node = self.browse([(node.id)])
+
+        for child in tmp_node[0].child_id:
+            result.append(child)
+            result.append(self.children(child))
+
+        return result

@@ -118,6 +118,17 @@
     </field>
   </record>
 
+  <record id="commission_hierarchy_search_view" model="ir.ui.view">
+            <field name="name">commission.hierarchy.search</field>
+            <field name="model">Commission hierarchy</field>
+            <field name="arch" type="xml">
+                <search string="Commission hierarchy">
+                    <field name="name" string="Commission hierarchy"/>
+                    <field name="parent_id"/>
+                </search>
+            </field>
+        </record>
+
   <record id="commission_summary_list_view" model="ir.ui.view">
     <field name="name">commission.summary.list</field>
     <field name="model">commission.summary</field>
