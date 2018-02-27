@@ -77,12 +77,12 @@ class commission_hierarchy(models.Model):
 
         node = self.browse([node_id])
         if not node:
-            return None
+            return result
 
         children = node.child_id
         if not children:
-            return None
-        result = self.children(node)
+            return result
+        result = self.__children(node)
         return result
 
     @api.model
@@ -103,14 +103,14 @@ class commission_hierarchy(models.Model):
         if not node_id:
             node_id = 1
 
-    @api.model
-    def children(self, node):
+    
+    def __children(self, node):
         result = []
 
         tmp_node = self.browse([(node.id)])
 
         for child in tmp_node[0].child_id:
             result.append(child)
-            result.append(self.children(child))
+            result.extend(self.__children(child))
 
         return result
