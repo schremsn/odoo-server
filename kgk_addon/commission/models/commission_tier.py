@@ -17,7 +17,7 @@ class CommissionTier(models.Model):
     scheme = fields.Many2one('commission.scheme', required=True, ondelete='cascade')
 
 
-    @api.onchange('tierStart')
+    @api.onchange('tier_start')
     def check_overlap(self):
         scheme_id = self.scheme
         start = self.tierStart
