@@ -3,15 +3,10 @@
 
 from odoo.tests.common import TransactionCase
 import datetime
+from commissiondata import CommissionData as cd;
 
 class TestCommission(TransactionCase):
-  prod_id1 = 1
-  prod_id2 = 2
-  agent_id1 = 5
-  agent_id2 = 10
-  manager_id1 = 1
-  manager_id2 = 9
-
+  
   # set basic data
   def setUp(self, *args, **kwargs):
     super(TestCommission, self).setUp(*args, **kwargs)
@@ -42,49 +37,9 @@ class TestCommission(TransactionCase):
     demo_user = self.env.ref('base.user_demo')
 
     # create two schemes for two products with two tiers each
-    tier1 = {
-      'type' : 'q',
-      'tier_start' : 0,
-      'tier_end' : 2,
-      'trigger' : 's',
-      'amount' : 20
-    }
-    tier2 = {
-      'type' : 'q',
-      'tier_start' : 3,
-      'tier_end' : 9,
-      'trigger' : 's',
-      'amount' : 30
-    }
     scheme = self.env['commission.scheme']
-    self.scheme1 = scheme.create({
-      'name' : 'scheme1',
-      'active' : True,
-      'product' : self.prod_id1,
-      'tier_ids' : ((0, 0, tier1), (0, 0, tier2))
-    })
-
-    tier3 = {
-      'type' : 'q',
-      'tier_start' : 0,
-      'tier_end' : 2,
-      'trigger' : 's',
-      'amount' : 20
-    }
-    tier4 = {
-      'type' : 'q',
-      'tier_start' : 3,
-      'tier_end' : 9,
-      'trigger' : 's',
-      'amount' : 30
-    }
-
-    self.scheme2 = scheme.create({
-      'name' : 'scheme2',
-      'active' : True,
-      'product' : self.prod_id2,
-      'tier_ids' : ((0, 0, tier3), (0, 0, tier4))
-    })
+    self.scheme1 = scheme.create(cd.scheme_a1)
+    self.scheme2 = scheme.create(cd.scheme_a2)
 
     tier = self.env['commission.tier']
 
@@ -95,20 +50,7 @@ class TestCommission(TransactionCase):
     self.assertEqual(count, 4, 'error creating agent tiers')
 
     # create manager commission scheme
-    tier5 = {
-      'type' : 'q',
-      'tier_start' : 0,
-      'tier_end' : 99,
-      'trigger' : 'c',
-      'percent' : 5.0
-    }
-
-    self.scheme3 = scheme.create({
-      'name' : 'manager scheme',
-      'active' : True,
-      'product' : self.prod_id1,
-      'tier_ids' : [(0, 0, tier5)]
-    })
+    self.scheme3 = scheme.create(cd.scheme_m1)
 
     # create two commission group
     group = self.env['commission.group']
