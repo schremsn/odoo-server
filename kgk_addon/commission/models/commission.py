@@ -25,6 +25,7 @@ class Commission(models.Model):
         for group in groups:
             for id in group.salesperson_ids:
                 dicAgents.update({id.id : id.id})
+                print('agent %s' % id.login)
                 self.calc_for_user(id.id, start_time)
         
         # calculate commission based tiers
@@ -54,8 +55,6 @@ class Commission(models.Model):
         dict_lines = dict()
         dict_schemes = dict()
         prod_id = 0
-
-        print('user: %s' % (user_id))
 
         # find schemes for the user
         groups = self.env['commission.group'].search([('active', '=', True), ('salesperson_ids', '=', user_id)])
@@ -90,20 +89,23 @@ class Commission(models.Model):
                 arr_triggers[1] = line.price_total
                 dict_lines.update({prod_id : arr_triggers})
 
-        # all commssion schemes/tiers for sold product
+        # all commission schemes/tiers for sold product
         for key in dict_lines.keys():
             arr_triggers = dict_lines.get(key)
             arr_tiers = []
             arr_details = []
-            amount = 0.0
+            product_amount = 0.0
 
-            schemes = self.env['commission.scheme'].search([('active', '=', True), ('product', '=', key)])
+            schemes = self.env['commission.scheme'].search([('active', '=', True), ('product', '=', key), ('id', 'in', arr_scheme_ids)])
             for scheme in schemes:     
                 arr_schemes = [] 
                 rate = 0.0
                 tiers = scheme.tier_ids
+
+
                 # find eligable tiers based on type and sales qty/price
                 for tier in tiers:
+                    amount = 0.0
                     # if commission based skip
                     if(tier.trigger == 'c'):
                         continue
@@ -132,6 +134,8 @@ class Commission(models.Model):
                     # if tier doesn't apply skip
                     if amount == 0.0:
                         continue
+                    
+                    product_amount += amount
 
                     dict_detail = dict()
                     dict_detail.update({'calc_datetime' : calc_time})
@@ -149,12 +153,12 @@ class Commission(models.Model):
             dict_summary.update({'start_date' : start_time})
             dict_summary.update({'end_date' : calc_time})
             dict_summary.update({'sales_agent' : user_id})
-            dict_summary.update({'amount' : amount})
+            dict_summary.update({'amount' : product_amount})
             dict_summary.update({'detail' : arr_details})
+
+            self.env['commission.summary'].create(dict_summary)
             
-            #self.env['commission.summary'].create(dict_summary)
-            
-            print('amount: %d for product %d ' % (amount, key))
+            print('amount: %d for product %d ' % (product_amount, key))
             print('==============================')
 
     
@@ -231,22 +235,25 @@ class Commission(models.Model):
         # get teammembers of all child nodes
         for child_node in child_nodes:
             arrReports.extend(child_node.team.member_ids)
-        
+
         # get all commissions for the sales agents and calculate total
         arr_tmp = []
         for report in arrReports:
             arr_tmp.append(report.id)
-        
-        # @todo need to only grab new commission summaries
+
+        print('number of members: %d'  % len(arr_tmp))
+                
         for product in dicProducts.keys():
             total = 0.0
             commission = 0.0
             dic_summary = dict()
             arr_details = []
-            
+
             lines = self.env['commission.detail'].search([('sales_agent', 'in', arr_tmp), ('product', '=', product), ('write_date', '>', start_time)])
             for line in lines:
                 total += line.amount
+
+            print('product %s  lines: %d total amount %s' %(product, len(lines),  total))
 
             for scheme in arrSchemes:
                 tiers = scheme.tier_ids
@@ -272,6 +279,8 @@ class Commission(models.Model):
 
             print('manager commission %d for product %d ' % (commission, product))
             total_commission += commission
+        if total_commission == 0:
+            return
         dict_summary = dict()
         dict_summary.update({'start_date' : start_time})
         dict_summary.update({'end_date' : calc_time})
@@ -279,7 +288,7 @@ class Commission(models.Model):
         dict_summary.update({'amount' : total_commission})
         dict_summary.update({'detail' : arr_details})
             
-        #self.env['commission.summary'].create(dict_summary)
+        self.env['commission.summary'].create(dict_summary)
 
         print('total commission %d ' % total_commission)
 
