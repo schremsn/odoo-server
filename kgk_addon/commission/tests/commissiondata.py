@@ -67,6 +67,21 @@ class CommissionData():
         'tier_ids' : [(0, 0, tier5)]
     }
 
+    tier6 = {
+        'type' : 'v',
+        'tier_start' : 0,
+        'tier_end' : 99,
+        'trigger' : 'c',
+        'percent' : 10.0
+    }
+
+    scheme_m2 = {
+        'name' : 'manager scheme2',
+        'active' : True,
+        'product' : prod_id2,
+        'tier_ids' : [(0, 0, tier6)]
+    }
+
     # user data
     arr_leads = ['HQ', 'Manager North', 'Manager South', 'North Lead 1', 'North Lead 2']
     arr_hierarchy = [

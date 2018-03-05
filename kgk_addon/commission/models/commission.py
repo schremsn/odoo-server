@@ -229,6 +229,7 @@ class Commission(models.Model):
             if scheme.active:
                 dicProducts.update({scheme.product.id : scheme.product.id})
 
+
         child_nodes = node.child_nodes_deep(node.id)
         arrReports.extend(node.team.member_ids)
 
@@ -253,9 +254,11 @@ class Commission(models.Model):
             for line in lines:
                 total += line.amount
 
-            print('product %s  lines: %d total amount %s' %(product, len(lines),  total))
-
             for scheme in arrSchemes:
+                # skip if scheme does apply to product
+                if(scheme.product.id != product):
+                    continue
+
                 tiers = scheme.tier_ids
                 for tier in tiers:
                     # skip tiers that are not commission based

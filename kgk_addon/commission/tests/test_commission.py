@@ -76,6 +76,7 @@ class TestCommission(TransactionCase):
 
     # create manager commission scheme
     self.scheme3 = scheme.create(cd.scheme_m1)
+    self.scheme4 = scheme.create(cd.scheme_m2)
     self.arr_schemes.append(self.scheme3.id)
 
     # create two commission group
@@ -95,6 +96,7 @@ class TestCommission(TransactionCase):
     self.group2.scheme_ids += self.scheme1
     self.group2.scheme_ids += self.scheme2
     self.group1.scheme_ids += self.scheme3
+    self.group1.scheme_ids += self.scheme4
 
     #assign user to groups
     for lead in leads:
@@ -103,7 +105,7 @@ class TestCommission(TransactionCase):
       self.group2.salesperson_ids += agent
 
     count = len(scheme.search([('active', '=', True)]))
-    self.assertEqual(count, 3, 'error creating manager schemes')
+    self.assertEqual(count, 4, 'error creating schemes')
 
     count = len(tier.search([('scheme.id', 'in', [self.scheme3.id])]))
     self.assertEqual(count, 1, 'error creating manager tiers')
